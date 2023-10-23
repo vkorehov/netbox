@@ -22,7 +22,7 @@ NB_CONSOLE_SERVER_PORT_TEMPLATES = "console_server_port_templates"
 NB_DEVICE_BAYS = "device_bays"
 NB_DEVICE_BAY_TEMPLATES = "device_bay_templates"
 NB_DEVICES = "devices"
-NB_DEVICE_ROLES = "device_roles"
+NB_ROLES = "roles"
 NB_DEVICE_TYPES = "device_types"
 NB_FRONT_PORTS = "front_ports"
 NB_FRONT_PORT_TEMPLATES = "front_port_templates"
@@ -81,7 +81,7 @@ class NetboxDcimModule(NetboxModule):
         - device_bays
         - device_bay_templates
         - devices
-        - device_roles
+        - roles
         - device_types
         - front_ports
         - front_port_templates
