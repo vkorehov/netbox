@@ -48,7 +48,7 @@ API_APPS_ENDPOINTS = dict(
         "device_bays",
         "device_bay_templates",
         "devices",
-        "device_roles",
+        "roles",
         "device_types",
         "front_ports",
         "front_port_templates",
@@ -132,7 +132,7 @@ QUERY_TYPES = dict(
     custom_field="name",
     custom_link="name",
     device="name",
-    device_role="slug",
+    role="slug",
     device_type="slug",
     export_targets="name",
     export_template="name",
@@ -221,7 +221,7 @@ CONVERT_TO_ID = {
     "dcim.rearport": "rear_ports",
     "default_platform": "platforms",
     "device": "devices",
-    "device_role": "device_roles",
+    "role": "roles",
     "device_type": "device_types",
     "device_types": "device_types",
     "export_targets": "route_targets",
@@ -270,7 +270,7 @@ CONVERT_TO_ID = {
     "rear_port": "rear_ports",
     "rear_port_template": "rear_port_templates",
     "rir": "rirs",
-    "roles": "device_roles",
+    "roles": "roles",
     "route_targets": "route_targets",
     # Just a placeholder as scope can be several different types including sites.
     "scope": "sites",
@@ -291,7 +291,7 @@ CONVERT_TO_ID = {
     "untagged_vlan": "vlans",
     "virtual_chassis": "virtual_chassis",
     "virtual_machine": "virtual_machines",
-    "virtual_machine_role": "device_roles",
+    "virtual_machine_role": "roles",
     "vm_bridge": "interfaces",
     "vlan": "vlans",
     "vlan_group": "vlan_groups",
@@ -326,7 +326,7 @@ ENDPOINT_NAME_MAPPING = {
     "device_bays": "device_bay",
     "device_bay_templates": "device_bay_template",
     "devices": "device",
-    "device_roles": "device_role",
+    "roles": "role",
     "device_types": "device_type",
     "export_templates": "export_template",
     "fhrp_groups": "fhrp_group",
@@ -433,7 +433,7 @@ ALLOWED_QUERY_PARAMS = {
     "device_bay": set(["name", "device"]),
     "device_bay_template": set(["name", "device_type"]),
     "device": set(["name"]),
-    "device_role": set(["slug"]),
+    "role": set(["slug"]),
     "device_type": set(["slug"]),
     "export_template": set(["name"]),
     "fhrp_group": set(
@@ -574,7 +574,7 @@ CONVERT_KEYS = {
     "cluster_group": "group",
     "component": "component_id",
     "contact_group": "group",
-    "device_role": "role",
+    "role": "role",
     "fhrp_group": "group",
     "inventory_item_role": "role",
     "parent_contact_group": "parent",
@@ -610,7 +610,7 @@ SLUG_REQUIRED = {
     "cluster_types",
     "contact_groups",
     "contact_roles",
-    "device_roles",
+    "roles",
     "device_types",
     "inventory_item_roles",
     "ipam_roles",
@@ -835,11 +835,6 @@ class NetboxModule(object):
 
         for key in data:
             if self.endpoint == "power_panels" and key == "rack_group":
-                temp_dict[key] = data[key]
-            # TODO: Remove this once the lowest supported Netbox version is 3.6 or greater as we can use default logic of CONVERT_KEYS moving forward.
-            elif key == "device_role" and not self._version_check_greater(
-                self.version, "3.6", greater_or_equal=True
-            ):
                 temp_dict[key] = data[key]
             elif key in CONVERT_KEYS:
                 # This will keep the original key for keys in list, but also convert it.
